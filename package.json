@@ -1,6 +1,7 @@
 {
   "name": "angular-signup-september2020",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Angular 10 signup form",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +10,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "author": "Roman Malieiev <aromaleev@gmail.com>",
   "private": true,
+  "repository": "git@github.com:romaleev/angular-signup-september2020.git",
   "dependencies": {
     "@angular/animations": "~10.1.1",
     "@angular/common": "~10.1.1",
