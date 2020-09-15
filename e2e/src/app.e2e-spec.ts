@@ -1,16 +1,36 @@
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
 
-describe('workspace-project App', () => {
+describe('workspace-project angular-signup-september2020', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should submit correctly', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('angular-signup-september2020 app is running!');
+
+    page.setInput('firstName', 'First');
+    page.setInput('lastName', 'Last');
+    page.setInput('email', 'my@email.com');
+    page.setInput('password', 'asdffdsA');
+
+    page.click('register');
+
+    expect(page.getAlert('success')).toEqual('Registered successfully');
+  });
+
+  it('should not submit if incorrect', () => {
+    page.navigateTo();
+
+    page.setInput('lastName', 'Last');
+    page.setInput('email', 'my@email.com');
+    page.setInput('password', 'asdffdsA');
+
+    page.click('register');
+
+    expect(page.getAlert('success')).toBeFalsy();
   });
 
   afterEach(async () => {

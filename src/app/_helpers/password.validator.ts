@@ -1,6 +1,5 @@
 import { FormGroup } from '@angular/forms';
 
-// custom validator to check that two fields match
 export function PasswordValidator(controlName: string, excludeControlNames: string[]): (formGroup: FormGroup) => void {
   return (formGroup: FormGroup) => {
     const control = formGroup.controls[controlName];
@@ -10,7 +9,8 @@ export function PasswordValidator(controlName: string, excludeControlNames: stri
       return;
     }
 
-    if (excludeControlNames.some((excludeControl) => control.value.includes(formGroup.controls[excludeControl].value))){
+    if (excludeControlNames.some((excludeControl) =>
+      formGroup.controls[excludeControl].value && control.value.includes(formGroup.controls[excludeControl].value))) {
       return control.setErrors({ containName: true });
     }
 

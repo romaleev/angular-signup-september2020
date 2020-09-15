@@ -5,7 +5,19 @@ export class AppPage {
     return browser.get(browser.baseUrl) as Promise<unknown>;
   }
 
-  getTitleText(): Promise<string> {
-    return element(by.css('app-root .content span')).getText() as Promise<string>;
+  async setInput(name: string, value: string): Promise<void> {
+    await element.all(by.id(name)).sendKeys(value);
+  }
+
+  async click(name: string): Promise<void> {
+    await element.all(by.id(name)).click();
+  }
+
+  async getAlert(name: string): Promise<string> {
+    const present = await element(by.id(name)).isPresent();
+    if (!present){
+      return '';
+    }
+    return element(by.id(name)).getText();
   }
 }

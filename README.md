@@ -23,12 +23,6 @@ example:
 }
 ```
 
-## Possible Improvements
-
-* Create components AppInput, AppEmail and AppPassword with test specs within AppComponent instead of inlining them.
-* Add App component Unit test
-* Add E2E test
-
 ## Development server
 
 Run `ng serve --open` for a dev server. The app will automatically reload if you change any of the source files.

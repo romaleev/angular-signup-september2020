@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { fakeBackendProvider } from './_helpers/fake.backend';
+import { InputComponent } from './_components/input.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { fakeBackendProvider } from './_helpers/fake.backend';
     HttpClientModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    InputComponent
   ],
   providers: [
     fakeBackendProvider

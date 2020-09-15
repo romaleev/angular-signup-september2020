@@ -1,0 +1,18 @@
+<div>
+  <label [for]="formControlName">{{ title }}</label>
+  <input [id]="formControlName" type="text"
+         [value]="value"
+         (input)="onChange($event.target.value)"
+         (blur)="onTouched()"
+         [disabled]="isDisabled"
+         class="form-control"
+         [type]="type || 'text'"
+         [ngClass]="{ 'is-invalid': submitted && errors }"/>
+  <div *ngIf="submitted && errors" class="invalid-feedback">
+    <div *ngIf="errors.required">{{ title }} is required</div>
+    <div *ngIf="errors.email">{{ title }} must be a valid email address</div>
+    <div *ngIf="errors.minlength">{{ title }} must be at least 8 characters</div>
+    <div *ngIf="errors.containName">{{ title }} should not contain First or Last Name</div>
+    <div *ngIf="errors.caseLetters">{{ title }} should lower and uppercase letters</div>
+  </div>
+</div>
