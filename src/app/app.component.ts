@@ -27,9 +27,11 @@ export class AppComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-    }, {
-      validator: PasswordValidator('password', ['firstName', 'lastName'])
     });
+
+    const { password, firstName, lastName } = this.registerForm.controls;
+
+    this.registerForm.setValidators(PasswordValidator(password, [firstName, lastName]));
   }
 
   // convenience getter for easy access to form fields

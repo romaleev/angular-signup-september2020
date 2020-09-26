@@ -5,40 +5,33 @@ import { delay, materialize, dematerialize } from 'rxjs/operators';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
+
+  private static ok(body): Observable<HttpResponse<any>> {
+    return of(new HttpResponse({ status: 200, body }))
+      .pipe(delay(500)); // delay observable to simulate server api call
+  }
+
+  private static error(message): Observable<HttpResponse<any>> {
+    return throwError({ error: { message } })
+      .pipe(materialize(), delay(500), dematerialize());
+  }
+
+  private static register(body): Observable<HttpResponse<any>> {
+    if (body.firstName && body.lastName && body.email && body.password) {
+      return FakeBackendInterceptor.ok(body);
+    } else {
+      return FakeBackendInterceptor.error('Wrong format');
+    }
+  }
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const { url, method, body } = request;
 
-    return handleRoute();
-
-    function handleRoute(): Observable<HttpEvent<any>> {
-      switch (true) {
-        case url.endsWith('/users') && method === 'POST':
-          return register();
-        default:
-          // pass through any requests not handled above
-          return next.handle(request);
-      }
+    if (url.endsWith('/users') && method === 'POST') {
+      return FakeBackendInterceptor.register(body);
     }
 
-    function register(): Observable<HttpResponse<any>> {
-      if (body.firstName && body.lastName && body.email && body.password) {
-        return ok();
-      } else {
-        return error('Wrong format');
-      }
-    }
-
-    // helper functions
-
-    function ok(): Observable<HttpResponse<any>> {
-      return of(new HttpResponse({ status: 200, body }))
-        .pipe(delay(500)); // delay observable to simulate server api call
-    }
-
-    function error(message): Observable<HttpResponse<any>> {
-      return throwError({ error: { message } })
-        .pipe(materialize(), delay(500), dematerialize());
-    }
+    return next.handle(request);
   }
 }
 

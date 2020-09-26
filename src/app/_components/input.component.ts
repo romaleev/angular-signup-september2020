@@ -19,10 +19,10 @@ export class InputComponent implements ControlValueAccessor {
   @Input() submitted: boolean;
   @Input() errors: ValidationErrors | InputErrors;
 
-  value = '';
-  isDisabled = false;
-  onChange(value: string): void {}
-  onTouched(): void {}
+  public value = '';
+  public isDisabled = false;
+  public onChange(value: string): void {}
+  public onTouched(): void {}
 
   writeValue(value: string): void {
     this.value = value;

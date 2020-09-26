@@ -1,23 +1,25 @@
-import { FormGroup } from '@angular/forms';
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
-export function PasswordValidator(controlName: string, excludeControlNames: string[]): (formGroup: FormGroup) => void {
-  return (formGroup: FormGroup) => {
-    const control = formGroup.controls[controlName];
+export function PasswordValidator(passwordControl: AbstractControl, excludeControls: AbstractControl[] = []): ValidatorFn {
 
-    if (control.errors && !control.errors.containName && !control.errors.caseLetters) {
+  return (): ValidationErrors => {
+
+    if (passwordControl.errors && !passwordControl.errors.containName && !passwordControl.errors.caseLetters) {
       // return if another validator has already found an error on the matchingControl
       return;
     }
 
-    if (excludeControlNames.some((excludeControl) =>
-      formGroup.controls[excludeControl].value && control.value.includes(formGroup.controls[excludeControl].value))) {
-      return control.setErrors({ containName: true });
+    if (excludeControls.some((excludeControl: AbstractControl) =>
+      excludeControl.value && passwordControl.value.includes(excludeControl.value))) {
+      passwordControl.setErrors({ containName: true });
+      return;
     }
 
-    if (!/^(?=.*[a-z])(?=.*[A-Z])/.test(control.value)) {
-      return control.setErrors({ caseLetters: true });
+    if (!/^(?=.*[a-z])(?=.*[A-Z])/.test(passwordControl.value)) {
+      passwordControl.setErrors({ caseLetters: true });
+      return;
     }
 
-    control.setErrors(null);
+    passwordControl.setErrors(null);
   };
 }
