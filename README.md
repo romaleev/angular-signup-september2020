@@ -43,5 +43,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 Add tests:
 - app.component.spec.ts
-- register.service.ts
-- fake.backend.ts
+
