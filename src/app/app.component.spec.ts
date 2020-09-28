@@ -1,9 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
+  let app: AppComponent;
+  let appFixture: ComponentFixture<AppComponent>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -16,21 +19,30 @@ describe('AppComponent', () => {
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    appFixture = TestBed.createComponent(AppComponent);
+    app = appFixture.componentInstance;
+    app.ngOnInit();
   });
 
-  // it(`should have have all field valid before submit'`, () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   const app = fixture.componentInstance;
-  //
-  //   expect(app.registerForm.controls.firstName.valid).toBeTruthy();
-  //   expect(app.registerForm.controls.lastName.valid).toBeTruthy();
-  //   expect(app.registerForm.controls.email.valid).toBeTruthy();
-  //   expect(app.registerForm.controls.password.valid).toBeTruthy();
-  //     //.toEqual('angular-signup-september2020');
-  // });
+  it('should create the app', () => {
+    expect(appFixture).toBeTruthy();
+  });
+
+  it(`should be valid if fields entered correctly'`, () => {
+    app.registerForm.controls.firstName.setValue('First');
+    app.registerForm.controls.lastName.setValue('Last');
+    app.registerForm.controls.email.setValue('my@email.com');
+    app.registerForm.controls.password.setValue('asdffdsA');
+    expect(app.registerForm.invalid).toBeFalsy();
+  });
+
+  it(`should be invalid if fields are empty or entered incorrectly'`, () => {
+    app.registerForm.controls.firstName.setValue('First');
+    app.registerForm.controls.lastName.setValue('Last');
+    app.registerForm.controls.email.setValue('myemail.com');
+    app.registerForm.controls.password.setValue('asdffdsA');
+    expect(app.registerForm.invalid).toBeTruthy();
+  });
 
 });

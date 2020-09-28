@@ -1,4 +1,4 @@
-import { waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed} from '@angular/core/testing';
 import { InputComponent } from './input.component';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -8,12 +8,12 @@ describe('InputComponentTest', () => {
   let testHostComponent: TestHostComponent;
   let testHostFixture: ComponentFixture<TestHostComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [InputComponent, TestHostComponent]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     testHostFixture = TestBed.createComponent(TestHostComponent);
